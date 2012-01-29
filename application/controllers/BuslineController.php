@@ -41,19 +41,26 @@ class BuslineController extends Zend_Controller_Action {
     {
 
         $buslines = new Buslines();
-        $id = (int)$this->_request->getParam('id');
-        $busline = $buslines->fetchRow('id = '.$id);
-        $this->view->buslineId = $busline->id;
-        $this->view->buslineName = $busline->name;
-        $this->view->buslineDescription = $busline->description;
-        $this->render();
-        
-        
-        if($this->getRequest()->isPost()){
+       
+        $id = (int)$this->getRequest()->getParam('id');
+        if($this->getRequest()->isPost()){ 
+            $data = array(
+                    'name' => $this->getRequest()->getPost('buslineName'),
+                    'description' => $this->getRequest()->getPost('buslineDescription')
+                    );        
+            $buslines->update($data, 'id ='.$this->getRequest()->getPost('formBuslineId'));
             
-            $this->_redirect('/');
+            $this->_redirect('/'); 
+        } else {
+            
+            $busline = $buslines->fetchRow('id = '.$id);
+            $this->view->buslineId = $busline->id;
+            $this->view->buslineName = $busline->name;
+            $this->view->buslineDescription = $busline->description;
             
         }
+        
+        $this->render(); 
     }
     
     public function buslineForm()
@@ -67,8 +74,7 @@ class BuslineController extends Zend_Controller_Action {
              ->setAttrib('class','editor');
              
   		$id = $form->createElement('text', 'id');
-        $id->setAttrib('disabled', true)
-           ->setLabel('ID:');
+        $id->setLabel('ID:');
         
         $name = $form->createElement('text','name');
         $name->setRequired(true)

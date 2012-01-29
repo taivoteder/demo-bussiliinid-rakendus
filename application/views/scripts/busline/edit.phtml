@@ -1,23 +1,18 @@
 <p>Edit: <?php echo $this->buslineName;?></p>
-
-
-<?php echo $this->form;?>
+<p>Busline ID: <?php echo $this->buslineId;?></p>
 
 <table style="width: 200px;">
 
-<form action="/uus/busline/edit" method="post">
 
-<tr>
-    <td><label for="buslineId">ID:</label></td>
-    <td><input type="text" disabled="disabled" value="<?php echo $this->buslineId;?>" /></td>
-</tr>
+<form action="/uus/busline/edit" method="post">
+<input type="hidden" name="formBuslineId" value="<?php echo $this->buslineId;?>" />
 <tr>
     <td><label for="buslineName">Buslinename:</label></td>
     <td><input type="text" name="buslineName" value="<?php echo $this->buslineName;?>" /></td>
 </tr>
 <tr>
     <td style="vertical-align: top;"><label for="buslineDescription">Description:</label></td>
-    <td><textarea rows="5" cols="50"><?php echo $this->buslineDescription; ?></textarea></td>
+    <td><textarea rows="5" cols="50" name="buslineDescription"><?php echo $this->buslineDescription; ?></textarea></td>
 </tr>
 <tr>
     <td></td>
