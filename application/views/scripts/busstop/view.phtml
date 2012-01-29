@@ -1,0 +1,12 @@
+<p>Busstop: <b><?php echo $this->name;?></b></p>
+<table>
+<th>List of buslines</th>
+<?php foreach($this->buslines as $busline) :?>
+    <tr>
+        <td><?php echo $busline->name;?></td>
+    </tr>
+<?php endforeach;?>
+
+
+
+</table>

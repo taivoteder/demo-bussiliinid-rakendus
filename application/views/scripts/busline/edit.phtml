@@ -1,0 +1,30 @@
+<p>Edit: <?php echo $this->buslineName;?></p>
+
+
+<?php echo $this->form;?>
+
+<table style="width: 200px;">
+
+<form action="/uus/busline/edit" method="post">
+
+<tr>
+    <td><label for="buslineId">ID:</label></td>
+    <td><input type="text" disabled="disabled" value="<?php echo $this->buslineId;?>" /></td>
+</tr>
+<tr>
+    <td><label for="buslineName">Buslinename:</label></td>
+    <td><input type="text" name="buslineName" value="<?php echo $this->buslineName;?>" /></td>
+</tr>
+<tr>
+    <td style="vertical-align: top;"><label for="buslineDescription">Description:</label></td>
+    <td><textarea rows="5" cols="50"><?php echo $this->buslineDescription; ?></textarea></td>
+</tr>
+<tr>
+    <td></td>
+    <td><input type="submit" value="Submit" /></td>
+</tr>
+
+</form>
+
+
+</table>

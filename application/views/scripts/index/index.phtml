@@ -1,0 +1,16 @@
+<h3>Buslines</h3>
+<table style="width:400px;table-layout: auto;">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Added</th>
+    </tr>
+    <?php foreach($this->buslines as $busline): ?>
+    <tr>
+        <td><?php echo $this->escape($busline->name);?></td>
+        <td><a href="<?php echo $this->url(array('controller'=>'busline','action'=>'view', 'id' => $busline->id));?>">Details</a></td>
+        <td><a href="<?php echo $this->url(array('controller'=>'busline','action'=>'edit', 'id' => $busline->id));?>">Edit</a></td>
+        <td><a href="#">Delete</a></td>
+    </tr>
+    <a><?php endforeach;?></a>
+</table>
