@@ -17,6 +17,15 @@ if(sizeof($this->errors) != 0){
     <td><textarea rows="5" cols="50" name="buslineDescription"><?php echo $this->buslineDescription; ?></textarea></td>
 </tr>
 <tr>
+    <td style="vertical-align: top;">Select busstops:</td>
+    <td><select name="busstopList[]" size="5" multiple="multiple">
+    <?php foreach($this->busstops as $busstop){?>
+        <option value="<?php echo($busstop->id);?>" <?php if(in_array($busstop->id, $this->selected)) echo('selected = "seleced"');?>><?php echo($busstop->name) ;?></option>
+    <?php };?>
+    </select></td>
+
+</tr>
+<tr>
     <td></td>
     <td><input type="submit" value="Submit" /></td>
 </tr>
@@ -28,3 +37,5 @@ if(sizeof($this->errors) != 0){
 -->
 
 </table>
+
+<p><?php print_r($this->selected);?></p>
