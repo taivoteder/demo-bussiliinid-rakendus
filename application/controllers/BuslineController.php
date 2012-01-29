@@ -21,9 +21,12 @@ class BuslineController extends Zend_Controller_Action {
 
     public function addAction()
     {
+        $busstops = new Busstops();
+        $this->view->busstops = $busstops->fetchAll();
         if($this->getRequest()->isPost()){
             $buslineName = $this->getRequest()->getPost('buslineName');
             $buslineDescription = $this->getRequest()->getPost('buslineDescription');
+            
             if(empty($buslineName) || empty($buslineDescription)){
                 $this->view->error = "Please fill all fiealds";
             } else {
@@ -33,7 +36,20 @@ class BuslineController extends Zend_Controller_Action {
                         'name' => $buslineName,
                         'description' => $buslineDescription
                         );
-                $buslines->insert($data);
+                $buslineId = $buslines->insert($data);
+                                
+                $db = Zend_Registry::get('db');        
+                $list = $this->getRequest()->getPost('busstopList');
+                foreach($list as $id){
+                    $data = array(
+                            'buslines_id' => $buslineId,
+                            'busstops_id' => $id,
+                            );
+                            
+                    $db->insert('bb',$data);
+                }
+
+                // 
                 $this->view->message = "New busline added.";
             } 
         }

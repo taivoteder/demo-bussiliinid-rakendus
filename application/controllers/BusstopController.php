@@ -15,6 +15,35 @@ class BusstopController extends Zend_Controller_Action {
         $this->render();
     }
     
+    public function addAction()
+    {
+        $errors = array();
+        if($this->getRequest()->isPost()){
+            $busstopName = $this->getRequest()->getPost('busstopName');
+            $xCoord = $this->getRequest()->getPost('xCoord');
+            $yCoord = $this->getrequest()->getPost('yCoord');
+            
+            if(empty($busstopName) || empty($xCoord) || empty($yCoord)){
+                array_push($errors , 'Please fill all the fields'); 
+            } elseif(!is_numeric($xCoord) || !is_numeric($yCoord)){
+                array_push($errors, 'Coordinates must be numeric'); 
+            } else {
+                $busstops = new Busstops();
+                $data = array(
+                        'name' => $busstopName,
+                        'x_coord' => $xCoord,
+                        'y_coord' => $yCoord,
+                        );
+                $busstops->insert($data);
+                $this->view->message = "New busstop added successfuly!";
+            }
+        }
+        
+        $this->view->errors = $errors;
+        $this->render();
+        
+        
+    }
     public function viewAction()
     {
         $busstops = new Busstops();

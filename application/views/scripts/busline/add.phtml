@@ -4,24 +4,37 @@
 
 <?php if(isset($this->error)){ echo($this->error );}?>
 <?php if(isset($this->message)){ echo($this->message);}?>
-<table style="width: 200px;">
+
+
+<table style="width:300px;table-layout: auto;">
 
 <form action="/uus/busline/add" method="post">
 
 <tr>
-    <td><label for="buslineName">Buslinename:</label></td>
+    <td><label for="buslineName">Busline name:</label></td>
     <td><input type="text" name="buslineName" value="" /></td>
 </tr>
 <tr>
     <td style="vertical-align: top;"><label for="buslineDescription">Description:</label></td>
     <td><textarea rows="5" cols="50" name="buslineDescription"></textarea></td>
 </tr>
+
+<tr>
+<td>Select busstops:</td>
+<td><select name="busstopList[]" size="4" multiple="multiple">
+<?php foreach($this->busstops as $busstop){?>
+    <option value="<?php echo($busstop->id);?>"><?php echo($busstop->name) ;?></option>
+<?php };?>
+</select></td>
+
+</tr>
 <tr>
     <td></td>
     <td><input type="submit" value="Submit" /></td>
 </tr>
-
 </form>
+
+
 
 
 </table>
