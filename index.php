@@ -36,7 +36,6 @@ try {
     
     // testing connection
     $db = Zend_Db::factory('PDO_MYSQL',$params);
-    $db->getConnection();
     Zend_Db_Table::setDefaultAdapter($db);
     
     $options = array(
@@ -46,6 +45,7 @@ try {
     );
     
     Zend_Layout::startMvc($options);
+    Zend_Registry::set('db', $db);
     // router
     $router = new Zend_Controller_Router_Rewrite();
     

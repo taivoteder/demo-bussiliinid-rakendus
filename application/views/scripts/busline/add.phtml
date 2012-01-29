@@ -1,0 +1,27 @@
+
+<h3>Add new busline</h3>
+
+
+<?php if(isset($this->error)){ echo($this->error );}?>
+<?php if(isset($this->message)){ echo($this->message);}?>
+<table style="width: 200px;">
+
+<form action="/uus/busline/add" method="post">
+
+<tr>
+    <td><label for="buslineName">Buslinename:</label></td>
+    <td><input type="text" name="buslineName" value="" /></td>
+</tr>
+<tr>
+    <td style="vertical-align: top;"><label for="buslineDescription">Description:</label></td>
+    <td><textarea rows="5" cols="50" name="buslineDescription"></textarea></td>
+</tr>
+<tr>
+    <td></td>
+    <td><input type="submit" value="Submit" /></td>
+</tr>
+
+</form>
+
+
+</table>

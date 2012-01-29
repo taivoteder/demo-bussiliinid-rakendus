@@ -3,6 +3,13 @@
 <p>Description: <?php echo $this->description;?></p>
 <p><small>Date added: <?php echo date("d-m-Y", strtotime($this->dateAdded));?></small></p>
 <table>
+    <th><?php 
+    
+    if(sizeof($this->busstops) != 0){
+        echo("Busstops: "); 
+    } else {
+        echo("No busstops assigned.");
+    }?></th>
     <?php foreach($this->busstops as $busstop): ?>
     <tr>
         <td><a href="<?php echo $this->url(array('controller'=>'busstop','action'=>'view', 'id' => $busstop->id));?>"><?php echo($busstop->name);?></a></td>

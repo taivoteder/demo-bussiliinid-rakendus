@@ -18,13 +18,27 @@ class BuslineController extends Zend_Controller_Action {
         $this->view->buslines = $buslines->fetchAll();
         $this->render();
     }
-    
-    public function listAction()
+
+    public function addAction()
     {
-        // ...
-        
+        if($this->getRequest()->isPost()){
+            $buslineName = $this->getRequest()->getPost('buslineName');
+            $buslineDescription = $this->getRequest()->getPost('buslineDescription');
+            if(empty($buslineName) || empty($buslineDescription)){
+                $this->view->error = "Please fill all fiealds";
+            } else {
+                
+                $buslines = new Buslines();
+                $data = array(
+                        'name' => $buslineName,
+                        'description' => $buslineDescription
+                        );
+                $buslines->insert($data);
+                $this->view->message = "New busline added.";
+            } 
+        }
+        $this->render();
     }
-    
     public function viewAction()
     {
         $buslines = new Buslines();      
@@ -52,7 +66,6 @@ class BuslineController extends Zend_Controller_Action {
             
             $this->_redirect('/'); 
         } else {
-            
             $busline = $buslines->fetchRow('id = '.$id);
             $this->view->buslineId = $busline->id;
             $this->view->buslineName = $busline->name;
@@ -61,6 +74,31 @@ class BuslineController extends Zend_Controller_Action {
         }
         
         $this->render(); 
+    }
+    
+    public function deleteAction(){
+        
+        $buslines = new Buslines();
+        
+        $id = $this->getRequest()->getParam('id');
+        if($this->getRequest()->isPost()){
+            $id = (int)$this->getRequest()->getPost('id');
+            $action = $this->getRequest()->getPost('del');
+            if($action == 'Yes'){
+                $db = Zend_Registry::get('db');
+                $db->delete('bb','buslines_id = '.$id);    
+                $db->delete('buslines','buslines.id = '.$id);
+            }
+            
+            $this->_redirect('/'); 
+        } else {
+            $busline = $buslines->fetchRow('id = '.$id);
+            $this->view->buslineId = $busline->id;
+            $this->view->buslineName = $busline->name;
+            $this->view->buslineDescription = $busline->description;
+            
+        }
+        $this->render();
     }
     
     public function buslineForm()

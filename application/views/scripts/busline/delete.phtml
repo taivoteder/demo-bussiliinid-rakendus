@@ -1,0 +1,11 @@
+Do you really want to delete
+
+
+<?php echo $this->buslineName; ?>
+
+<form action="/uus/busline/delete" method="post">
+<input type="hidden" name="id" value="<?php echo $this->buslineId;?>" />
+<input type="submit" name="del" value="Yes" />
+<input type="submit" name="del" value="No" />
+
+</form>
