@@ -1,8 +1,12 @@
-<h3>Edit: <?php echo $this->buslineName;?></h3>
+<h3>Edit: "<?php echo $this->buslineName;?>" busline</h3>
+<?php 
+if(sizeof($this->errors) != 0){
+    foreach($this->errors as $error){
+        echo($error . "<br />");  
+    }
+}?>
 <table style="width: 200px;">
-
-
-<form action="/uus/busline/edit" method="post">
+<form action="<?php echo($this->baseUrl()."/busline/edit");?>" method="post">
 <input type="hidden" name="formBuslineId" value="<?php echo $this->buslineId;?>" />
 <tr>
     <td><label for="buslineName">Buslinename:</label></td>
@@ -18,6 +22,9 @@
 </tr>
 
 </form>
+<!--
+<option selected="selected"></option>
 
+-->
 
 </table>

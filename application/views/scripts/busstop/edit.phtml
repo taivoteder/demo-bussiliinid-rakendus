@@ -1,0 +1,41 @@
+<h3>Edit: "<?php echo $this->busstopName;?>" busline</h3>
+<p><?php 
+if(sizeof($this->errors) != 0){
+    foreach($this->errors as $error){
+        echo($error . "<br />");  
+    }
+}?></p>
+<p><?php 
+if(sizeof($this->messages) != 0){
+    foreach($this->messages as $message){
+        echo($message . "<br />");  
+    }
+}?></p>
+
+<table style="width: 300px;">
+<form action="<?php echo($this->baseUrl()."/busstop/edit");?>" method="post">
+<input type="hidden" name="formBusstopId" value="<?php echo $this->busstopId;?>" />
+<tr>
+    <td><label for="busstopName">Busstop name:</label></td>
+    <td><input type="text" name="busstopName" value="<?php echo $this->busstopName;?>" /></td>
+</tr>
+<tr>
+    <td>X coord</td>
+    <td><input type="text" name="xCoord" value="<?php echo $this->xCoord;?>" /></td>
+</tr>
+<tr>
+    <td>Y coord</td>
+    <td><input type="text" name="yCoord" value="<?php echo $this->yCoord;?>" /></td>
+</tr>
+<tr>
+    <td></td>
+    <td><input type="submit" value="Submit" /></td>
+</tr>
+
+</form>
+<!--
+<option selected="selected"></option>
+
+-->
+
+</table>

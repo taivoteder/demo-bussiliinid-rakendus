@@ -44,14 +44,59 @@ class BusstopController extends Zend_Controller_Action {
         
         
     }
+    
     public function viewAction()
     {
         $busstops = new Busstops();
         $id = (int)$this->_request->getParam('id');
         $busstop = $busstops->fetchRow('id = '.$id);
+        $this->view->busstopX = $busstop->x_coord;
+        $this->view->busstopY = $busstop->y_coord;
         $this->view->buslines = $busstops->findBuslines($id);
         $this->view->name = $busstop->name;
         $this->render();
+    }
+
+    public function editAction()
+    {
+
+        $messages = array();
+        $errors = array();
+        $busstops = new Busstops();
+       
+        $id = (int)$this->getRequest()->getParam('id');
+        if($this->getRequest()->isPost()){ 
+            
+            $busstopName = $this->getRequest()->getPost('busstopName');
+            $xCoord = (int)$this->getRequest()->getPost('xCoord');
+            $yCoord = (int)$this->getrequest()->getPost('yCoord');
+            
+            if(empty($busstopName) || empty($xCoord) || empty($yCoord)){
+                array_push($errors , 'Please fill all the fields'); 
+            } elseif(!is_numeric($xCoord) || !is_numeric($yCoord)){
+                array_push($errors, 'Coordinates must be numeric'); 
+            } else {
+                
+                $data = array(
+                    'name' => $busstopName,
+                    'x_coord' => $xCoord,
+                    'y_coord' => $yCoord
+                );
+                
+                $busstops->update($data, 'id ='.$this->getRequest()->getPost('formBusstopId'));
+                array_push($messages, 'Edited succesfully');
+            }
+        } else {
+            $busstop = $busstops->fetchRow('id = '.$id);
+            $this->view->busstopId = $busstop->id;
+            $this->view->busstopName = $busstop->name;
+            $this->view->xCoord = $busstop->x_coord;
+            $this->view->yCoord = $busstop->y_coord;
+            
+        }
+        $this->view->errors = $errors;
+        $this->view->messages = $messages;
+        $this->render(); 
     }
 }
 ?>

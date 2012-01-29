@@ -1,1 +1,16 @@
-Index
+<h3>Busstops</h3>
+<p><a href="<?php echo $this->baseUrl()."/busstop/add";?>">Add new busstop</a></p>
+<table style="width:400px;table-layout: auto;">
+
+    <tr>
+        <th>Name</th>
+    </tr>
+    <?php foreach($this->busstops as $busstop): ?>
+    <tr>
+        <td><?php echo $this->escape($busstop->name);?></td>
+        <td><a href="<?php echo $this->url(array('controller'=>'busstop','action'=>'view', 'id' => $busstop->id));?>">Details</a></td>
+        <td><a href="<?php echo $this->url(array('controller'=>'busstop','action'=>'edit', 'id' => $busstop->id));?>">Edit</a></td>
+        <td><a href="<?php echo $this->url(array('controller'=>'busstop','action'=>'delete', 'id' => $busstop->id));?>">Delete</a></td>
+    </tr>
+    <a><?php endforeach;?></a>
+</table>

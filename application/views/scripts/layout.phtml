@@ -1,16 +1,86 @@
+<?php
+$container = new Zend_Navigation();
+$this->navigation($container);
+ 
+$container->addPage(
+    array(
+        'label'      => 'Home',
+        'module'     => 'default',
+        'controller' => 'index',
+        'action'     => 'index',
+        'pages'      =>
+        array(
+            array(
+                'label'      => 'Buslines',
+                'module'     => 'default',
+                'controller' => 'busline',
+                'action'     => 'index',
+                'pages'      =>
+                array(array(
+                    'label'     => 'Add busline',
+                    'module'    => 'default',
+                    'controller'=> 'busline',
+                    'action'    => 'add',
+                ),
+                array(
+                    'label'     => 'View busline',
+                    'module'    => 'default',
+                    'controller'=> 'busline',
+                    'action'    => 'view',
+                ),
+                array(
+                    'label'     => 'Edit busline',
+                    'module'    => 'default',
+                    'controller'=> 'busline',
+                    'action'    => 'edit',
+                ))
+            ),
+            array(
+                'label'     => 'Busstops',
+                'module'    => 'default',
+                'controller'=> 'busstop',
+                'action'    => 'index',
+                'pages'     => 
+                array(array(
+                    'label'     => 'View',
+                    'module'    => 'default',
+                    'controller'=> 'busstop',
+                    'action'    => 'view',
+                ),
+                array(
+                    'label'     => 'Add',
+                    'module'    => 'default',
+                    'controller'=> 'busstop',
+                    'action'    => 'add',
+                ),
+                array(
+                    'label'     => 'Edit',
+                    'module'    => 'default',
+                    'controller'=> 'busstop',
+                    'action'    => 'edit',
+                ))
+           
+        ))
+    )
+);
+?>
+
 <!doctype>
 <html>
 <head>
-	<title>Busline application</title>
+<base href="<?php $this->baseUrl();?>" />
+<link rel="stylesheet" href="<?php echo $this->baseUrl('public/css/stylesheet.css'); ?>" />
+<script type="text/javascript" src="<?php echo $this->baseUrl('public/js/javascript.js'); ?>"></script>
+<title>Busline application</title>
 </head>
-
 <body>
-	<div id="header">
+    <div id="header">
         <?php echo $this->render("header.phtml");?>
     </div>
     <div id="nav">
         <?php echo $this->render("menu.phtml");?>
     </div>
+    <div id="breadcrumbs">You are at: <?php echo $this->navigation()->breadcrumbs()->setLinkLast(false)->setMinDepth(0)->render();?></div>
 	<div id="content">
 		<?php echo $this->layout()->content; ?>
 	</div>

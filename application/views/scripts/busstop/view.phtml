@@ -1,9 +1,10 @@
 <p>Busstop: <b><?php echo $this->name;?></b></p>
+<p>Coordinates: <b><?php echo($this->busstopX.",".$this->busstopY);?></b></p>
 <table>
-<th>List of buslines</th>
+<th>List of buslines with this busstop</th>
 <?php foreach($this->buslines as $busline) :?>
     <tr>
-        <td><?php echo $busline->name;?></td>
+        <td><a href="<?php echo $this->url(array('controller'=>'busline','action'=>'view', 'id' => $busline->id));?>"><?php echo $busline->name;?></a></td>
     </tr>
 <?php endforeach;?>
 

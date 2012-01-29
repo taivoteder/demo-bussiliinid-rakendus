@@ -6,10 +6,7 @@ if(sizeof($this->errors) != 0){
     foreach($this->errors as $error){
         echo($error . "<br />");  
     }
-}
-
-
-?>
+}?>
 <?php if(isset($this->message)){ echo($this->message);}?>
 <table style="width: 300px;">
 
@@ -20,11 +17,11 @@ if(sizeof($this->errors) != 0){
     <td><input type="text" name="busstopName" value="" /></td>
 </tr>
 <tr>
-<td><label for="xCoord">X coord (e.g 45.0000): </label></td>
+<td><label for="xCoord">X coord (e.g 45): </label></td>
 <td><input type="text" name="xCoord" /></td>
 </tr>
 <tr>
-    <td><label for="yCoord">Y coord (e.g 45.0000): </label></td>
+    <td><label for="yCoord">Y coord (e.g 45): </label></td>
     <td><input type="text" name="yCoord" /></td>
 </tr>
 <tr>

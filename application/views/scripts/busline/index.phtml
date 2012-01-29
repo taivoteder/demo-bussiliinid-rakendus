@@ -1,1 +1,15 @@
-:)
+<h3>Buslines</h3>
+<p><a href="<?php echo $this->baseUrl()."/busline/add";?>">Add new busline</a></p>
+<table style="width:400px;table-layout: auto;">
+    <tr>
+        <th>Name</th>
+    </tr>
+    <?php foreach($this->buslines as $busline): ?>
+    <tr>
+        <td><?php echo $this->escape($busline->name);?></td>
+        <td><a href="<?php echo $this->url(array('controller'=>'busline','action'=>'view', 'id' => $busline->id));?>">Details</a></td>
+        <td><a href="<?php echo $this->url(array('controller'=>'busline','action'=>'edit', 'id' => $busline->id));?>">Edit</a></td>
+        <td><a href="<?php echo $this->url(array('controller'=>'busline','action'=>'delete', 'id' => $busline->id));?>">Delete</a></td>
+    </tr>
+    <a><?php endforeach;?></a>
+</table>

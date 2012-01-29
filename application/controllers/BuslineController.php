@@ -40,14 +40,18 @@ class BuslineController extends Zend_Controller_Action {
                                 
                 $db = Zend_Registry::get('db');        
                 $list = $this->getRequest()->getPost('busstopList');
-                foreach($list as $id){
-                    $data = array(
-                            'buslines_id' => $buslineId,
-                            'busstops_id' => $id,
-                            );
-                            
-                    $db->insert('bb',$data);
+                
+                if(isset($list)){
+                    foreach($list as $id){
+                        $data = array(
+                                'buslines_id' => $buslineId,
+                                'busstops_id' => $id,
+                                );
+                                
+                        $db->insert('bb',$data);
+                    }
                 }
+
 
                 // 
                 $this->view->message = "New busline added.";
