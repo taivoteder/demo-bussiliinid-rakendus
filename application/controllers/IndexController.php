@@ -4,20 +4,21 @@
 class IndexController extends Zend_Controller_Action {
 	public function init()
 	{
-		//prepare the view we will render in the actions
-	    $this->initView();
-	    //declare variables in header, menu and footer
-	    // $this->view->url = $this->_request->getBaseUrl();
-	    $this->view->stylesPath = $this->view->url . '/public/styles/';
-        
-        $this->view->layout()->navigation = "<h1>Navigation</h1>";
+        $this->initView();
+        $this->view->headScript()->appendFile('public/js/ajaxload.js');
+        $ajaxContext = $this->_helper->getHelper('ajaxContext');
+        $ajaxContext->addActionContext('index', 'html')
+                    ->addActionContext('list', 'html')
+                    ->initContext();
         include("./application/models/buslines.php");
+        include("./application/models/busstops.php");
 	}  
     public function indexAction()
     {
         $buslines = new Buslines();
         $this->view->buslines = $buslines->fetchAll();
         $this->render();
+
     }
     public function infoAction()
     {
@@ -31,6 +32,21 @@ class IndexController extends Zend_Controller_Action {
         $this->view->paginaTitel = 'Contact';
         $this->view->title = 'Contact us :]';
         $this->render();
-
+    }
+    
+    public function listAction()
+    {
+        $list = array();
+        if($this->getRequest()->isPost()){
+            $type = $this->getRequest()->getPost('list');
+            if($type == 'busline'){
+                $buslines = new Buslines();
+                $list = $buslines->fetchAll()->toArray();
+            } else {
+                $busstops = new Busstops();
+                $list = $busstops->fetchAll()->toArray();   
+            }
+        }
+        echo Zend_Json::encode($list);
     }
 }

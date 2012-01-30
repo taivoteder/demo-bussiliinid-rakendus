@@ -6,10 +6,10 @@
     </tr>
     <?php foreach($this->buslines as $busline): ?>
     <tr>
-        <td><?php echo $this->escape($busline->name);?></td>
-        <td><a href="<?php echo $this->url(array('controller'=>'busline','action'=>'view', 'id' => $busline->id));?>">Details</a></td>
-        <td><a href="<?php echo $this->url(array('controller'=>'busline','action'=>'edit', 'id' => $busline->id));?>">Edit</a></td>
-        <td><a href="<?php echo $this->url(array('controller'=>'busline','action'=>'delete', 'id' => $busline->id));?>">Delete</a></td>
+        <td width="384px"><?php echo $this->escape($busline->name);?></td>
+        <td><a href="<?php echo $this->url(array('controller'=>'busline','action'=>'view', 'id' => $busline->id));?>"><img src="<?php echo $this->baseUrl()."/public/img/information.png";?>" /></a></td>
+        <td><a href="<?php echo $this->url(array('controller'=>'busline','action'=>'edit', 'id' => $busline->id));?>"><img src="<?php echo $this->baseUrl()."/public/img/application_edit.png";?>" /></a></td>
+        <td><a href="<?php echo $this->url(array('controller'=>'busline','action'=>'delete', 'id' => $busline->id));?>"><img src="<?php echo $this->baseUrl()."/public/img/delete.png";?>" /></a></td>
     </tr>
     <a><?php endforeach;?></a>
 </table>

@@ -3,10 +3,9 @@ class BuslineController extends Zend_Controller_Action {
 	public function init()
     {  
 	    $this->initView();
-        /*
-        $contextSwitch = $this->_helper->getHelper('contextSwitch');
-        $contextSwitch->addActionContext('list','json')
-                      ->initContext();*/
+        $ajaxContext = $this->_helper->getHelper('ajaxContext');
+        $ajaxContext->addActionContext('index', 'html')
+                    ->initContext();
         include("./application/models/buslines.php");
         include("./application/models/busstops.php");
 	}  
@@ -64,6 +63,7 @@ class BuslineController extends Zend_Controller_Action {
         $this->view->name = $busline->name;
         $this->view->description = $busline->description;
         $this->view->dateAdded = $busline->date_add;
+        $this->view->id = $busline->id;
         $this->render();
     }
     
@@ -82,15 +82,18 @@ class BuslineController extends Zend_Controller_Action {
                     'name' => $this->getRequest()->getPost('buslineName'),
                     'description' => $this->getRequest()->getPost('buslineDescription')
                     );   
-
-            $buslines->update($data, 'id ='.$this->getRequest()->getPost('formBuslineId'));
+            
+            $buslineId = (int)$this->getRequest()->getPost('formBuslineId');
+            $buslines->update($data, 'id ='.$buslineId);
             
             $list = $this->getRequest()->getPost('busstopList');
             
+            // delete old records and replace new selected ones
+            $db->delete('bb', 'buslines_id = '.$buslineId);
             if(isset($list)){
                 foreach($list as $busstopId){                
                     $values = array(
-                              'buslines_id' => $this->getRequest()->getPost('formBuslineId'),
+                              'buslines_id' => $buslineId,
                               'busstops_id' => $busstopId
                             ); 
                     $query = "INSERT INTO bb (buslines_id, busstops_id) VALUES(?,?) ON DUPLICATE KEY UPDATE buslines_id = VALUES(buslines_id), busstops_id = VALUES(busstops_id)";
@@ -98,7 +101,7 @@ class BuslineController extends Zend_Controller_Action {
                     $db->query($query, array_values($values));
                 }
             }
-            $this->_redirect('index');
+            $this->_redirect('/busline/');
         } else {
             $busline = $buslines->fetchRow('id = '.$id);
             
@@ -115,7 +118,6 @@ class BuslineController extends Zend_Controller_Action {
             }
             
             $this->view->selected = $selected;
-            $this->view->buslineId = $busline->id;
             $this->view->buslineName = $busline->name;
             $this->view->buslineDescription = $busline->description;
             $this->view->busstops = $busstops;
@@ -138,19 +140,18 @@ class BuslineController extends Zend_Controller_Action {
                 $db->delete('buslines','buslines.id = '.$id);
             }
             
-            $this->_redirect('index'); 
+            $this->_redirect('/busline/'); 
         } else {
             $busline = $buslines->fetchRow('id = '.$id);
-            $this->view->buslineId = $busline->id;
             $this->view->buslineName = $busline->name;
-            $this->view->buslineDescription = $busline->description;
-            
         }
         $this->render();
     }
     
     public function buslineForm()
     {
+        
+        // application/forms ?
         $view = new Zend_View();
         
         $form = new Zend_Form();

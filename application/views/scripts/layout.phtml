@@ -1,85 +1,43 @@
-<?php
-$container = new Zend_Navigation();
-$this->navigation($container);
- 
-$container->addPage(
-    array(
-        'label'      => 'Home',
-        'module'     => 'default',
-        'controller' => 'index',
-        'action'     => 'index',
-        'pages'      =>
-        array(
-            array(
-                'label'      => 'Buslines',
-                'module'     => 'default',
-                'controller' => 'busline',
-                'action'     => 'index',
-                'pages'      =>
-                array(array(
-                    'label'     => 'Add busline',
-                    'module'    => 'default',
-                    'controller'=> 'busline',
-                    'action'    => 'add',
-                ),
-                array(
-                    'label'     => 'View busline',
-                    'module'    => 'default',
-                    'controller'=> 'busline',
-                    'action'    => 'view',
-                ),
-                array(
-                    'label'     => 'Edit busline',
-                    'module'    => 'default',
-                    'controller'=> 'busline',
-                    'action'    => 'edit',
-                ),
-                array(
-                    'label'     => 'Delete busline',
-                    'module'    => 'default',
-                    'controller'=> 'busline',
-                    'action'    => 'delete',
-                ))
-            ),
-            array(
-                'label'     => 'Busstops',
-                'module'    => 'default',
-                'controller'=> 'busstop',
-                'action'    => 'index',
-                'pages'     => 
-                array(array(
-                    'label'     => 'View',
-                    'module'    => 'default',
-                    'controller'=> 'busstop',
-                    'action'    => 'view',
-                ),
-                array(
-                    'label'     => 'Add',
-                    'module'    => 'default',
-                    'controller'=> 'busstop',
-                    'action'    => 'add',
-                ),
-                array(
-                    'label'     => 'Edit',
-                    'module'    => 'default',
-                    'controller'=> 'busstop',
-                    'action'    => 'edit',
-                ))
-           
-        ))
-    )
-);
-?>
-
 <!doctype>
 <html>
 <head>
-<base href="<?php $this->baseUrl();?>" />
-<link rel="stylesheet" href="<?php echo $this->baseUrl('public/css/stylesheet.css'); ?>" />
-<script type="text/javascript" src="<?php echo $this->baseUrl('public/js/javascript.js'); ?>"></script>
+<?php $this->headlink()->appendStylesheet($this->baseUrl('public/css/stylesheet.css') , ''); ?>
+<?php echo $this->headlink();?>
+<?php echo $this->headScript();?>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+    $('.log').ajaxStart(function() {
+        $(this).text('Sooritatakse ajax päringut');
+    });
+    
+
+    $('#buslines').hide();
+    $('#busstops').hide();
+    
+    
+    $('a.busline').click(function() { 
+        $('#buslines').html("");
+        $('#buslines').toggle();
+        if($('#buslines').is(':visible')){
+            getList('busline');
+        }    
+    });
+    
+    $('a.busstop').click(function() { 
+        $('#busstops').html("");
+        $('#busstops').toggle();
+        if($('#busstops').is(':visible')){
+            getList('busstop');
+        }    
+    });
+    
+});
+</script>
 <title>Busline application</title>
 </head>
 <body>
+    <?php $this->render('breadcrumbs.phtml');?>
     <div id="header">
         <?php echo $this->render("header.phtml");?>
     </div>
@@ -93,6 +51,5 @@ $container->addPage(
     <div id="footer">
         <?php echo $this->render("footer.phtml");?>
     </div>
-    
 </body>
 </html>

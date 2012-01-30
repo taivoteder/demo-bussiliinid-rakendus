@@ -1,0 +1,78 @@
+<?php
+$container = new Zend_Navigation();
+$this->navigation($container);
+ 
+$container->addPage(
+    array(
+        'label'      => 'Home',
+        'module'     => 'default',
+        'controller' => 'index',
+        'action'     => 'index',
+        'pages'      =>
+        array(
+            array(
+                'label'      => 'Buslines',
+                'module'     => 'default',
+                'controller' => 'busline',
+                'action'     => 'index',
+                'pages'      =>
+                array(array(
+                    'label'     => 'Add busline',
+                    'module'    => 'default',
+                    'controller'=> 'busline',
+                    'action'    => 'add',
+                ),
+                array(
+                    'label'     => 'View busline',
+                    'module'    => 'default',
+                    'controller'=> 'busline',
+                    'action'    => 'view',
+                ),
+                array(
+                    'label'     => 'Edit busline',
+                    'module'    => 'default',
+                    'controller'=> 'busline',
+                    'action'    => 'edit',
+                ),
+                array(
+                    'label'     => 'Delete busline',
+                    'module'    => 'default',
+                    'controller'=> 'busline',
+                    'action'    => 'delete',
+                ))
+            ),
+            array(
+                'label'     => 'Busstops',
+                'module'    => 'default',
+                'controller'=> 'busstop',
+                'action'    => 'index',
+                'pages'     => 
+                array(array(
+                    'label'     => 'View',
+                    'module'    => 'default',
+                    'controller'=> 'busstop',
+                    'action'    => 'view',
+                ),
+                array(
+                    'label'     => 'Add',
+                    'module'    => 'default',
+                    'controller'=> 'busstop',
+                    'action'    => 'add',
+                ),
+                array(
+                    'label'     => 'Edit',
+                    'module'    => 'default',
+                    'controller'=> 'busstop',
+                    'action'    => 'edit',
+                ),
+                array(
+                    'label'     => 'Delete',
+                    'module'    => 'default',
+                    'controller'=> 'busstop',
+                    'action'    => 'delete',
+                ))
+           
+        ))
+    )
+);
+?>

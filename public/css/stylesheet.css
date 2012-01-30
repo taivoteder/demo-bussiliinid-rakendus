@@ -32,6 +32,15 @@ html, body {
     padding: 10px;
 }
 
+a, a:visited {
+    text-decoration: none;
+}
+#buslines, #busstops {
+    padding: 10px;
+    background-color: #f9f9f9;
+    display: none;
+}
+
 table {
     border-spacing: 1px;
     background-color: #eaeaea;

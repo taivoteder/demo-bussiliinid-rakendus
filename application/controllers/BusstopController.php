@@ -3,8 +3,9 @@ class BusstopController extends Zend_Controller_Action {
 	public function init()
     {
 	    $this->initView();
-	    // $this->view->url = $this->_request->getBaseUrl();
-	    $this->view->stylesPath = $this->view->url . '/public/styles/';  
+        $ajaxContext = $this->_helper->getHelper('ajaxContext');
+        $ajaxContext->addActionContext('index', 'html')
+                    ->initContext();
         include("./application/models/buslines.php");
         include("./application/models/busstops.php");
 	}  
@@ -41,8 +42,6 @@ class BusstopController extends Zend_Controller_Action {
         
         $this->view->errors = $errors;
         $this->render();
-        
-        
     }
     
     public function viewAction()
@@ -54,6 +53,7 @@ class BusstopController extends Zend_Controller_Action {
         $this->view->busstopY = $busstop->y_coord;
         $this->view->buslines = $busstops->findBuslines($id);
         $this->view->name = $busstop->name;
+        $this->view->id = $busstop->id;
         $this->render();
     }
 
@@ -65,8 +65,7 @@ class BusstopController extends Zend_Controller_Action {
         $busstops = new Busstops();
        
         $id = (int)$this->getRequest()->getParam('id');
-        if($this->getRequest()->isPost()){ 
-            
+        if($this->getRequest()->isPost()){     
             $busstopName = $this->getRequest()->getPost('busstopName');
             $xCoord = (int)$this->getRequest()->getPost('xCoord');
             $yCoord = (int)$this->getrequest()->getPost('yCoord');
@@ -97,6 +96,29 @@ class BusstopController extends Zend_Controller_Action {
         $this->view->errors = $errors;
         $this->view->messages = $messages;
         $this->render(); 
+    }
+    
+    public function deleteAction()
+    {
+        $busstops = new Busstops();
+        
+        $id = $this->getRequest()->getParam('id');
+        if($this->getRequest()->isPost()){
+            $id = (int)$this->getRequest()->getPost('id');
+            $action = $this->getRequest()->getPost('del');
+            if($action == 'Yes'){
+                $db = Zend_Registry::get('db');
+                $db->delete('bb','busstops_id = '.$id);    
+                $db->delete('busstops','busstops.id = '.$id);
+            }
+            
+            $this->_redirect('/busstop/'); 
+        } else {
+            $busstop = $busstops->fetchRow('id = '.$id);
+            $this->view->busstopId = $busstop->id;
+            $this->view->busstopName = $busstop->name;
+        }
+        $this->render();
     }
 }
 ?>

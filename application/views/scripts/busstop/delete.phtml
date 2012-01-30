@@ -1,0 +1,6 @@
+<p>Do you really want to delete busstop "<?php echo $this->busstopName; ?>"</p>
+
+<form action="/uus/busstop/delete" method="post">
+<input type="hidden" name="id" value="<?php echo $this->busstopId;?>" />
+<input type="submit" name="del" value="Yes" />
+<input type="submit" name="del" value="No" /></form>

@@ -1,7 +1,7 @@
-<p>Busstop: <b><?php echo $this->name;?></b></p>
+<p>Busstop: <b><?php echo $this->name;?></b> <a href="<?php echo $this->url(array('controller'=>'busline','action'=>'edit', 'id' => $this->id));?>"><img src="<?php echo $this->baseUrl()."/public/img/application_edit.png";?>" /></a></p>
 <p>Coordinates: <b><?php echo($this->busstopX.",".$this->busstopY);?></b></p>
 <table style="width: 400px;">
-<th>List of buslines with this busstop</th>
+<th>Buslines associated with this busstop</th>
 <?php foreach($this->buslines as $busline) :?>
     <tr>
         <td><a href="<?php echo $this->url(array('controller'=>'busline','action'=>'view', 'id' => $busline->id));?>"><?php echo $busline->name;?></a></td>
