@@ -83,7 +83,7 @@ class BusstopController extends Zend_Controller_Action {
                 );
                 
                 $busstops->update($data, 'id ='.$this->getRequest()->getPost('formBusstopId'));
-                array_push($messages, 'Edited succesfully');
+                $this->_redirect('/busstop/');
             }
         } else {
             $busstop = $busstops->fetchRow('id = '.$id);

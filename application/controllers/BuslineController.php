@@ -118,6 +118,7 @@ class BuslineController extends Zend_Controller_Action {
             }
             
             $this->view->selected = $selected;
+            $this->view->buslineId = $busline->id;
             $this->view->buslineName = $busline->name;
             $this->view->buslineDescription = $busline->description;
             $this->view->busstops = $busstops;
@@ -143,6 +144,7 @@ class BuslineController extends Zend_Controller_Action {
             $this->_redirect('/busline/'); 
         } else {
             $busline = $buslines->fetchRow('id = '.$id);
+            $this->view->buslineId = $busline->id;
             $this->view->buslineName = $busline->name;
         }
         $this->render();

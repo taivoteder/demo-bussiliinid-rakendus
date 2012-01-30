@@ -20,7 +20,7 @@
 </tr>
 
 <tr>
-<td style="vertical-align: top;">Select busstops:</td>
+<td style="vertical-align: top;">Select busstops:<br /><small>Multiple select with Shift/Ctrl</small></td>
 <td><select name="busstopList[]" size="5" multiple="multiple">
 <?php foreach($this->busstops as $busstop){?>
     <option value="<?php echo($busstop->id);?>"><?php echo($busstop->name) ;?></option>
