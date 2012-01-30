@@ -34,8 +34,8 @@ try {
     // database configuration
     $params = array(
         'host' => 'localhost',
-        'username' => 'username',
-        'password' => 'password',
+        'username' => 'tefkon1',
+        'password' => 'zeda9koy',
         'dbname' => 'test'
     );
     
@@ -52,8 +52,10 @@ try {
     Zend_Layout::startMvc($options);
     Zend_Registry::set('db', $db);
     // router
-    $router = new Zend_Controller_Router_Rewrite();
-    
+    // $router = new Zend_Controller_Router_Rewrite();
+    $config = new Zend_Config_Ini('./application/config.ini', 'production');
+    $router = Zend_Controller_Front::getInstance()->getRouter();
+    $router->addConfig($config, 'routes');
     /**
      * setBaseUrl() needs to be configured
      */ 
@@ -67,9 +69,7 @@ try {
     /**
      * Router
      */ 
-    // $config = new Zend_Config_Ini('./application/config.ini', 'production');
-    // $router = Zend_Controller_Front::getInstance()->getRouter();
-    // $router->addConfig($config, 'routes');
+
     /**
      * Run the controller
      */ 
