@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS `buslines` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(125) NOT NULL,
+  `description` text NOT NULL,
+  `date_add` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

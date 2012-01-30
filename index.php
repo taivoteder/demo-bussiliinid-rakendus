@@ -20,6 +20,7 @@ try {
 
     // uses include_path in php.ini
     require_once 'Zend/Loader/Autoloader.php';
+    
     $autoloader = Zend_Loader_Autoloader::getInstance();
     $autoloader->suppressNotFoundWarnings(false);
 
@@ -39,10 +40,12 @@ try {
         'dbname' => 'test'
     );
     
-    // testing connection
+    // database connection
     $db = Zend_Db::factory('PDO_MYSQL',$params);
+    $db->getConnection();
     Zend_Db_Table::setDefaultAdapter($db);
     
+    // setup layout
     $options = array(
         'layout' => 'layout',
         'layoutPath' => './application/views/scripts',
@@ -50,11 +53,14 @@ try {
     );
     
     Zend_Layout::startMvc($options);
+    
     Zend_Registry::set('db', $db);
+    
     // router
     $router = new Zend_Controller_Router_Rewrite();
+    
     /**
-     * setBaseUrl() needs to be configured
+     * @todo setBaseurl configuration specific
      */ 
     $controller = Zend_Controller_Front::getInstance();
     $controller->setControllerDirectory( './application/controllers')
@@ -62,14 +68,8 @@ try {
                ->throwExceptions(true)
                ->setBaseurl('/uus')
                ->setParam('noViewRenderer', true);
-    
-    /**
-     * Router
-     */ 
-
-    /**
-     * Run the controller
-     */ 
+               
+    // run the controller
 
     $controller->dispatch();
 } catch (Exception $e){
